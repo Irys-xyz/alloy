@@ -81,7 +81,7 @@ alloy-sol-types = { path = "../alloy-core/crates/sol-types", default-features = 
 
 alloy-rlp = { version = "0.3", default-features = false }
 
-alloy-chains = { path = "../alloy-core/crates/chains", default-features = false }
+alloy-chains = { version = "0.1.18", default-features = false }
 
 # eips
 alloy-eip2930 = { version = "0.1.0", default-features = false }
