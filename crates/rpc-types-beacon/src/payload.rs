@@ -18,6 +18,7 @@ use alloy_rpc_types_engine::{
     ExecutionPayload, ExecutionPayloadV1, ExecutionPayloadV2, ExecutionPayloadV3,
     ExecutionPayloadV4,
 };
+use irys_primitives::Shadows;
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
 use serde_with::{serde_as, DeserializeAs, DisplayFromStr, SerializeAs};
 use std::borrow::Cow;
@@ -112,6 +113,8 @@ struct BeaconPayloadAttributes {
     withdrawals: Option<Vec<Withdrawal>>,
     #[serde(skip_serializing_if = "Option::is_none")]
     parent_beacon_block_root: Option<B256>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub shadows: Option<Shadows>
 }
 
 /// Optimism Payload Attributes
@@ -153,6 +156,7 @@ pub mod beacon_api_payload_attributes {
             suggested_fee_recipient: payload_attributes.suggested_fee_recipient,
             withdrawals: payload_attributes.withdrawals.clone(),
             parent_beacon_block_root: payload_attributes.parent_beacon_block_root,
+            shadows: payload_attributes.shadows.clone()
         };
         beacon_api_payload_attributes.serialize(serializer)
     }
@@ -169,6 +173,7 @@ pub mod beacon_api_payload_attributes {
             suggested_fee_recipient: beacon_api_payload_attributes.suggested_fee_recipient,
             withdrawals: beacon_api_payload_attributes.withdrawals,
             parent_beacon_block_root: beacon_api_payload_attributes.parent_beacon_block_root,
+            shadows: beacon_api_payload_attributes.shadows
         })
     }
 }
@@ -417,6 +422,8 @@ struct BeaconExecutionPayloadV4<'a> {
     consolidation_requests: Vec<ConsolidationRequest>,
 }
 
+
+
 impl<'a> From<BeaconExecutionPayloadV4<'a>> for ExecutionPayloadV4 {
     fn from(payload: BeaconExecutionPayloadV4<'a>) -> Self {
         let BeaconExecutionPayloadV4 {
@@ -539,6 +546,7 @@ impl<'a> From<&'a ExecutionPayload> for BeaconExecutionPayload<'a> {
             ExecutionPayload::V4(payload) => {
                 BeaconExecutionPayload::V4(BeaconExecutionPayloadV4::from(payload))
             }
+            ExecutionPayload::V1Irys(_) => todo!()
         }
     }
 }

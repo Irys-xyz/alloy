@@ -128,9 +128,15 @@ pub struct Header {
     /// [EIP-7685]: https://eips.ethereum.org/EIPS/eip-7685
     #[cfg_attr(feature = "serde", serde(default, skip_serializing_if = "Option::is_none"))]
     pub requests_root: Option<B256>,
+    
+    /// the RLP root for the block's shadows
+    pub shadows_root: B256,
+
+    
     /// An arbitrary byte array containing data relevant to this block. This must be 32 bytes or
     /// fewer; formally Hx.
     pub extra_data: Bytes,
+
 }
 
 impl AsRef<Self> for Header {
@@ -163,6 +169,7 @@ impl Default for Header {
             excess_blob_gas: None,
             parent_beacon_block_root: None,
             requests_root: None,
+            shadows_root: EMPTY_ROOT_HASH
         }
     }
 }
@@ -488,6 +495,7 @@ impl Decodable for Header {
             extra_data: Decodable::decode(buf)?,
             mix_hash: Decodable::decode(buf)?,
             nonce: B64::decode(buf)?,
+            shadows_root: Decodable::decode(buf)?,
             base_fee_per_gas: None,
             withdrawals_root: None,
             blob_gas_used: None,
@@ -624,6 +632,7 @@ impl<'a> arbitrary::Arbitrary<'a> for Header {
             parent_beacon_block_root: u.arbitrary()?,
             requests_root: u.arbitrary()?,
             withdrawals_root: u.arbitrary()?,
+            shadows_root: u.arbitrary()?
         };
 
         Ok(generate_valid_header(
@@ -697,6 +706,8 @@ pub trait BlockHeader {
 
     /// Retrieves the requests root of the block, if available
     fn requests_root(&self) -> Option<B256>;
+
+    fn shadows_root(&self) -> B256;
 
     /// Retrieves the block's extra data field
     fn extra_data(&self) -> &Bytes;
@@ -781,6 +792,10 @@ impl BlockHeader for Header {
 
     fn requests_root(&self) -> Option<B256> {
         self.requests_root
+    }
+
+    fn shadows_root(&self) -> B256 {
+        self.shadows_root
     }
 
     fn extra_data(&self) -> &Bytes {
@@ -872,6 +887,7 @@ pub(super) mod serde_bincode_compat {
         parent_beacon_block_root: Option<B256>,
         #[serde(default)]
         requests_root: Option<B256>,
+        shadows_root: B256,
         extra_data: Cow<'a, Bytes>,
     }
 
@@ -899,6 +915,7 @@ pub(super) mod serde_bincode_compat {
                 parent_beacon_block_root: value.parent_beacon_block_root,
                 requests_root: value.requests_root,
                 extra_data: Cow::Borrowed(&value.extra_data),
+                shadows_root: value.shadows_root
             }
         }
     }
@@ -927,6 +944,7 @@ pub(super) mod serde_bincode_compat {
                 parent_beacon_block_root: value.parent_beacon_block_root,
                 requests_root: value.requests_root,
                 extra_data: value.extra_data.into_owned(),
+                shadows_root: value.shadows_root
             }
         }
     }

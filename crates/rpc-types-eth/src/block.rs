@@ -147,6 +147,8 @@ pub struct Header {
     /// EIP-7685 requests root.
     #[cfg_attr(feature = "serde", serde(default, skip_serializing_if = "Option::is_none"))]
     pub requests_root: Option<B256>,
+
+    pub shadows_root: B256
 }
 
 impl Header {
@@ -200,6 +202,7 @@ impl TryFrom<Header> for alloy_consensus::Header {
             excess_blob_gas,
             parent_beacon_block_root,
             requests_root,
+            shadows_root,
             // not included in the consensus header
             hash: _hash,
             total_difficulty: _total_difficulty,
@@ -225,6 +228,7 @@ impl TryFrom<Header> for alloy_consensus::Header {
             excess_blob_gas,
             parent_beacon_block_root,
             requests_root,
+            shadows_root,
             extra_data,
         })
     }
@@ -417,6 +421,8 @@ mod tests {
     #[test]
     #[cfg(feature = "serde")]
     fn serde_block() {
+        use alloy_consensus::EMPTY_ROOT_HASH;
+
         let block = Block {
             header: Header {
                 hash: B256::with_last_byte(1),
@@ -442,6 +448,7 @@ mod tests {
                 excess_blob_gas: None,
                 parent_beacon_block_root: None,
                 requests_root: None,
+                shadows_root: EMPTY_ROOT_HASH
             },
             uncles: vec![B256::with_last_byte(17)],
             transactions: vec![B256::with_last_byte(18)].into(),
@@ -460,6 +467,8 @@ mod tests {
     #[test]
     #[cfg(feature = "serde")]
     fn serde_uncle_block() {
+        use alloy_consensus::EMPTY_ROOT_HASH;
+
         let block = Block {
             header: Header {
                 hash: B256::with_last_byte(1),
@@ -485,6 +494,7 @@ mod tests {
                 excess_blob_gas: None,
                 parent_beacon_block_root: None,
                 requests_root: None,
+                shadows_root: EMPTY_ROOT_HASH
             },
             uncles: vec![],
             transactions: BlockTransactions::Uncle,
@@ -503,6 +513,8 @@ mod tests {
     #[test]
     #[cfg(feature = "serde")]
     fn serde_block_with_withdrawals_set_as_none() {
+        use alloy_consensus::EMPTY_ROOT_HASH;
+
         let block = Block {
             header: Header {
                 hash: B256::with_last_byte(1),
@@ -528,6 +540,7 @@ mod tests {
                 excess_blob_gas: None,
                 parent_beacon_block_root: None,
                 requests_root: None,
+                shadows_root: EMPTY_ROOT_HASH
             },
             uncles: vec![B256::with_last_byte(17)],
             transactions: vec![B256::with_last_byte(18)].into(),

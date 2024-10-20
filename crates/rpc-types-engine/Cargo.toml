@@ -1,15 +1,15 @@
 [package]
-name = "alloy-rpc-types-engine"
 description = "Types for the `engine` Ethereum JSON-RPC namespace"
+name = "alloy-rpc-types-engine"
 
-version.workspace = true
-edition.workspace = true
-rust-version.workspace = true
-license.workspace = true
-homepage.workspace = true
 authors.workspace = true
-repository.workspace = true
+edition.workspace = true
 exclude.workspace = true
+homepage.workspace = true
+license.workspace = true
+repository.workspace = true
+rust-version.workspace = true
+version.workspace = true
 
 [package.metadata.docs.rs]
 all-features = true
@@ -20,50 +20,50 @@ workspace = true
 
 [dependencies]
 # ethereum
-alloy-rlp = { workspace = true, features = ["arrayvec", "derive"] }
-alloy-primitives = { workspace = true, features = ["rlp", "serde"] }
 alloy-consensus = { workspace = true, features = ["serde"] }
 alloy-eips = { workspace = true, features = ["serde"] }
+alloy-primitives = { workspace = true, features = ["rlp", "serde"] }
+alloy-rlp = { workspace = true, features = ["arrayvec", "derive"] }
 
 # misc
 derive_more = { workspace = true, features = ["display"] }
+irys-primitives = { path = "../../../../crates/primitives" }
 strum = { workspace = true, features = ["derive"] }
-
 # serde
 alloy-serde = { workspace = true, optional = true }
 serde = { workspace = true, features = ["derive"], optional = true }
 
 # ssz
-ethereum_ssz_derive = { workspace = true, optional = true }
 ethereum_ssz = { workspace = true, optional = true }
+ethereum_ssz_derive = { workspace = true, optional = true }
 
 # jsonrpsee
 jsonrpsee-types = { version = "0.24", optional = true }
 
 # jwt
-rand = { workspace = true, optional = true }
 jsonwebtoken = { workspace = true, optional = true }
+rand = { workspace = true, optional = true }
 
 [features]
-default = ["jwt", "std", "serde"]
-std = ["alloy-consensus/std", "derive_more/std", "strum/std"]
-serde = ["dep:serde", "dep:alloy-serde"]
-jwt = ["dep:jsonwebtoken", "dep:rand"]
+default = ["jwt", "serde", "std"]
 jsonrpsee-types = ["dep:jsonrpsee-types"]
-ssz = ["std", "dep:ethereum_ssz", "dep:ethereum_ssz_derive", "alloy-eips/ssz"]
+jwt = ["dep:jsonwebtoken", "dep:rand"]
 kzg = ["alloy-consensus/kzg"]
+serde = ["dep:alloy-serde", "dep:serde"]
+ssz = ["alloy-eips/ssz", "dep:ethereum_ssz", "dep:ethereum_ssz_derive", "std"]
+std = ["alloy-consensus/std", "derive_more/std", "strum/std"]
 
 [dev-dependencies]
 alloy-primitives = { workspace = true, features = [
+    "arbitrary",
     "rand",
     "rlp",
     "serde",
-    "arbitrary",
 ] }
 
 arbitrary = { workspace = true, features = ["derive"] }
+assert_matches.workspace = true
 rand.workspace = true
 serde_json.workspace = true
 similar-asserts.workspace = true
 tempfile.workspace = true
-assert_matches.workspace = true
