@@ -10,8 +10,8 @@ use alloy_eips::{
     eip7002::WithdrawalRequest, eip7251::ConsolidationRequest, BlockNumHash,
 };
 use alloy_primitives::{Address, Bloom, Bytes, B256, B64, U256};
-use irys_primitives::Shadows;
 use core::iter::{FromIterator, IntoIterator};
+use irys_primitives::Shadows;
 
 use crate::ExecutionPayloadV1Irys;
 
@@ -739,7 +739,7 @@ pub enum ExecutionPayload {
     /// V4 payload
     V4(ExecutionPayloadV4),
     // Irys V1 payload
-    V1Irys(ExecutionPayloadV1Irys)
+    V1Irys(ExecutionPayloadV1Irys),
 }
 
 impl ExecutionPayload {
@@ -751,7 +751,6 @@ impl ExecutionPayload {
             Self::V3(payload) => &payload.payload_inner.payload_inner,
             Self::V4(payload) => &payload.payload_inner.payload_inner.payload_inner,
             Self::V1Irys(payload) => &payload.payload_inner.payload_inner.payload_inner,
-
         }
     }
 
@@ -762,7 +761,7 @@ impl ExecutionPayload {
             Self::V2(payload) => &mut payload.payload_inner,
             Self::V3(payload) => &mut payload.payload_inner.payload_inner,
             Self::V4(payload) => &mut payload.payload_inner.payload_inner.payload_inner,
-            Self::V1Irys(payload) => &mut payload.payload_inner.payload_inner.payload_inner
+            Self::V1Irys(payload) => &mut payload.payload_inner.payload_inner.payload_inner,
         }
     }
 
@@ -773,7 +772,7 @@ impl ExecutionPayload {
             Self::V2(payload) => payload.payload_inner,
             Self::V3(payload) => payload.payload_inner.payload_inner,
             Self::V4(payload) => payload.payload_inner.payload_inner.payload_inner,
-            Self::V1Irys(payload) => payload.payload_inner.payload_inner.payload_inner
+            Self::V1Irys(payload) => payload.payload_inner.payload_inner.payload_inner,
         }
     }
 
@@ -784,7 +783,7 @@ impl ExecutionPayload {
             Self::V2(payload) => Some(payload),
             Self::V3(payload) => Some(&payload.payload_inner),
             Self::V4(payload) => Some(&payload.payload_inner.payload_inner),
-            Self::V1Irys(payload) => Some(&payload.payload_inner.payload_inner)
+            Self::V1Irys(payload) => Some(&payload.payload_inner.payload_inner),
         }
     }
 
@@ -795,8 +794,7 @@ impl ExecutionPayload {
             Self::V2(payload) => Some(payload),
             Self::V3(payload) => Some(&mut payload.payload_inner),
             Self::V4(payload) => Some(&mut payload.payload_inner.payload_inner),
-            Self::V1Irys(payload) => Some(&mut payload.payload_inner.payload_inner)
-
+            Self::V1Irys(payload) => Some(&mut payload.payload_inner.payload_inner),
         }
     }
 
@@ -806,8 +804,7 @@ impl ExecutionPayload {
             Self::V1(_) | Self::V2(_) => None,
             Self::V3(payload) => Some(payload),
             Self::V4(payload) => Some(&payload.payload_inner),
-            Self::V1Irys(payload) => Some(&payload.payload_inner)
-
+            Self::V1Irys(payload) => Some(&payload.payload_inner),
         }
     }
 
@@ -816,9 +813,8 @@ impl ExecutionPayload {
         match self {
             Self::V1(_) | Self::V2(_) => None,
             Self::V3(payload) => Some(payload),
-            Self::V4(payload)  => Some(&mut payload.payload_inner),
-            Self::V1Irys(payload) => Some(&mut payload.payload_inner)
-
+            Self::V4(payload) => Some(&mut payload.payload_inner),
+            Self::V1Irys(payload) => Some(&mut payload.payload_inner),
         }
     }
 
@@ -827,7 +823,6 @@ impl ExecutionPayload {
         match self {
             Self::V1(_) | Self::V2(_) | Self::V3(_) | Self::V1Irys(_) => None,
             Self::V4(payload) => Some(payload),
-
         }
     }
 
@@ -843,7 +838,7 @@ impl ExecutionPayload {
     pub fn as_irys_v1(&self) -> Option<&ExecutionPayloadV1Irys> {
         match self {
             Self::V1(_) | Self::V2(_) | Self::V3(_) | Self::V4(_) => None,
-            Self::V1Irys(payload) => Some(&payload)
+            Self::V1Irys(payload) => Some(&payload),
         }
     }
 
@@ -851,7 +846,7 @@ impl ExecutionPayload {
     pub fn as_irys_v1_mut(&mut self) -> Option<&mut ExecutionPayloadV1Irys> {
         match self {
             Self::V1(_) | Self::V2(_) | Self::V3(_) | Self::V4(_) => None,
-            Self::V1Irys(payload) => Some(payload)
+            Self::V1Irys(payload) => Some(payload),
         }
     }
 
@@ -1109,7 +1104,7 @@ pub struct PayloadAttributes {
     /// See also <https://github.com/ethereum/execution-apis/blob/main/src/engine/cancun.md#payloadattributesv3>
     #[cfg_attr(feature = "serde", serde(skip_serializing_if = "Option::is_none"))]
     pub parent_beacon_block_root: Option<B256>,
-    
+
     #[serde(skip_serializing_if = "Option::is_none")]
     pub shadows: Option<Shadows>,
 }
