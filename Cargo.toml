@@ -70,7 +70,7 @@ alloy-transport-ipc = { version = "0.4", path = "crates/transport-ipc", default-
 alloy-transport-ws = { version = "0.4", path = "crates/transport-ws", default-features = false }
 
 
-alloy-core = { path = "../alloy-core/crates/alloy", default-features = false }
+alloy-core = { path = "../alloy-core/crates/core", default-features = false }
 alloy-dyn-abi = { path = "../alloy-core/crates/dyn-abi", default-features = false }
 alloy-json-abi = { path = "../alloy-core/crates/json-abi", default-features = false }
 alloy-primitives = { path = "../alloy-core/crates/primitives", default-features = false }
