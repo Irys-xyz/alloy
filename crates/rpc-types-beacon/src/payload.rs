@@ -114,7 +114,7 @@ struct BeaconPayloadAttributes {
     #[serde(skip_serializing_if = "Option::is_none")]
     parent_beacon_block_root: Option<B256>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub shadows: Option<Shadows>
+    pub shadows: Option<Shadows>,
 }
 
 /// Optimism Payload Attributes
@@ -156,7 +156,7 @@ pub mod beacon_api_payload_attributes {
             suggested_fee_recipient: payload_attributes.suggested_fee_recipient,
             withdrawals: payload_attributes.withdrawals.clone(),
             parent_beacon_block_root: payload_attributes.parent_beacon_block_root,
-            shadows: payload_attributes.shadows.clone()
+            shadows: payload_attributes.shadows.clone(),
         };
         beacon_api_payload_attributes.serialize(serializer)
     }
@@ -173,7 +173,7 @@ pub mod beacon_api_payload_attributes {
             suggested_fee_recipient: beacon_api_payload_attributes.suggested_fee_recipient,
             withdrawals: beacon_api_payload_attributes.withdrawals,
             parent_beacon_block_root: beacon_api_payload_attributes.parent_beacon_block_root,
-            shadows: beacon_api_payload_attributes.shadows
+            shadows: beacon_api_payload_attributes.shadows,
         })
     }
 }
@@ -422,8 +422,6 @@ struct BeaconExecutionPayloadV4<'a> {
     consolidation_requests: Vec<ConsolidationRequest>,
 }
 
-
-
 impl<'a> From<BeaconExecutionPayloadV4<'a>> for ExecutionPayloadV4 {
     fn from(payload: BeaconExecutionPayloadV4<'a>) -> Self {
         let BeaconExecutionPayloadV4 {
@@ -546,7 +544,7 @@ impl<'a> From<&'a ExecutionPayload> for BeaconExecutionPayload<'a> {
             ExecutionPayload::V4(payload) => {
                 BeaconExecutionPayload::V4(BeaconExecutionPayloadV4::from(payload))
             }
-            ExecutionPayload::V1Irys(_) => todo!()
+            ExecutionPayload::V1Irys(_) => todo!(),
         }
     }
 }

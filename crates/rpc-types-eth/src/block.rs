@@ -148,7 +148,7 @@ pub struct Header {
     #[cfg_attr(feature = "serde", serde(default, skip_serializing_if = "Option::is_none"))]
     pub requests_root: Option<B256>,
 
-    pub shadows_root: B256
+    pub shadows_root: B256,
 }
 
 impl Header {
@@ -448,7 +448,7 @@ mod tests {
                 excess_blob_gas: None,
                 parent_beacon_block_root: None,
                 requests_root: None,
-                shadows_root: EMPTY_ROOT_HASH
+                shadows_root: EMPTY_ROOT_HASH,
             },
             uncles: vec![B256::with_last_byte(17)],
             transactions: vec![B256::with_last_byte(18)].into(),
@@ -494,7 +494,7 @@ mod tests {
                 excess_blob_gas: None,
                 parent_beacon_block_root: None,
                 requests_root: None,
-                shadows_root: EMPTY_ROOT_HASH
+                shadows_root: EMPTY_ROOT_HASH,
             },
             uncles: vec![],
             transactions: BlockTransactions::Uncle,
@@ -540,7 +540,7 @@ mod tests {
                 excess_blob_gas: None,
                 parent_beacon_block_root: None,
                 requests_root: None,
-                shadows_root: EMPTY_ROOT_HASH
+                shadows_root: EMPTY_ROOT_HASH,
             },
             uncles: vec![B256::with_last_byte(17)],
             transactions: vec![B256::with_last_byte(18)].into(),

@@ -128,15 +128,13 @@ pub struct Header {
     /// [EIP-7685]: https://eips.ethereum.org/EIPS/eip-7685
     #[cfg_attr(feature = "serde", serde(default, skip_serializing_if = "Option::is_none"))]
     pub requests_root: Option<B256>,
-    
+
     /// the RLP root for the block's shadows
     pub shadows_root: B256,
 
-    
     /// An arbitrary byte array containing data relevant to this block. This must be 32 bytes or
     /// fewer; formally Hx.
     pub extra_data: Bytes,
-
 }
 
 impl AsRef<Self> for Header {
@@ -169,7 +167,7 @@ impl Default for Header {
             excess_blob_gas: None,
             parent_beacon_block_root: None,
             requests_root: None,
-            shadows_root: EMPTY_ROOT_HASH
+            shadows_root: EMPTY_ROOT_HASH,
         }
     }
 }
@@ -632,7 +630,7 @@ impl<'a> arbitrary::Arbitrary<'a> for Header {
             parent_beacon_block_root: u.arbitrary()?,
             requests_root: u.arbitrary()?,
             withdrawals_root: u.arbitrary()?,
-            shadows_root: u.arbitrary()?
+            shadows_root: u.arbitrary()?,
         };
 
         Ok(generate_valid_header(
@@ -915,7 +913,7 @@ pub(super) mod serde_bincode_compat {
                 parent_beacon_block_root: value.parent_beacon_block_root,
                 requests_root: value.requests_root,
                 extra_data: Cow::Borrowed(&value.extra_data),
-                shadows_root: value.shadows_root
+                shadows_root: value.shadows_root,
             }
         }
     }
@@ -944,7 +942,7 @@ pub(super) mod serde_bincode_compat {
                 parent_beacon_block_root: value.parent_beacon_block_root,
                 requests_root: value.requests_root,
                 extra_data: value.extra_data.into_owned(),
-                shadows_root: value.shadows_root
+                shadows_root: value.shadows_root,
             }
         }
     }
