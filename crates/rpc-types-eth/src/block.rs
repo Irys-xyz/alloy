@@ -147,7 +147,7 @@ pub struct Header {
     /// EIP-7685 requests root.
     #[cfg_attr(feature = "serde", serde(default, skip_serializing_if = "Option::is_none"))]
     pub requests_root: Option<B256>,
-
+    /// Shadow root.
     pub shadows_root: B256,
 }
 

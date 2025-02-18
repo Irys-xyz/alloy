@@ -20,6 +20,7 @@ pub use forkchoice::*;
 mod identification;
 pub use identification::*;
 
+/// Irys payload.
 pub mod irys_payload;
 pub use irys_payload::*;
 #[cfg(feature = "jwt")]

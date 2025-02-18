@@ -738,7 +738,7 @@ pub enum ExecutionPayload {
     V3(ExecutionPayloadV3),
     /// V4 payload
     V4(ExecutionPayloadV4),
-    // Irys V1 payload
+    /// Irys V1 payload.
     V1Irys(ExecutionPayloadV1Irys),
 }
 
@@ -1104,7 +1104,7 @@ pub struct PayloadAttributes {
     /// See also <https://github.com/ethereum/execution-apis/blob/main/src/engine/cancun.md#payloadattributesv3>
     #[cfg_attr(feature = "serde", serde(skip_serializing_if = "Option::is_none"))]
     pub parent_beacon_block_root: Option<B256>,
-
+    /// Optional vector of Shadow types.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub shadows: Option<Shadows>,
 }
