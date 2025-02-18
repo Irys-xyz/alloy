@@ -1,7 +1,9 @@
-use crate::{BlobsBundleV1, ExecutionPayloadV3, ExecutionPayloadV4};
+use crate::{BlobsBundleV1, ExecutionPayloadV3};
 use alloy_primitives::{B256, U256};
 use irys_primitives::{ShadowReceipt, Shadows};
 use serde::{Deserialize, Serialize};
+
+/// Irys V1 Execution Envelope Payload.
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct ExecutionPayloadEnvelopeV1Irys {
@@ -15,9 +17,11 @@ pub struct ExecutionPayloadEnvelopeV1Irys {
     /// should be used instead of an externally provided one.
     pub should_override_builder: bool,
     // pub is_empty: bool, // pub shadows: Shadows,
+    /// Vector of Shadow Receipts.
     pub shadow_receipts: Vec<ShadowReceipt>,
 }
 
+/// Irys V1 Execution Payload.
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct ExecutionPayloadV1Irys {

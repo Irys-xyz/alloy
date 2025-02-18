@@ -705,6 +705,7 @@ pub trait BlockHeader {
     /// Retrieves the requests root of the block, if available
     fn requests_root(&self) -> Option<B256>;
 
+    /// Retrieves the shadow root of the block.
     fn shadows_root(&self) -> B256;
 
     /// Retrieves the block's extra data field
